@@ -1,6 +1,4 @@
-import { useState } from 'react'
-
-
+import React, { useState } from 'react';
 
 const App = () => {
   const sintomas = [
@@ -48,6 +46,7 @@ const App = () => {
 
   const [valoresRepetidos, setValoresRepetidos] = useState([])
   const [selected, setSelected] = useState(0)
+  const [resultado, setResultado] = useState(0)
   const [valores, setValores] = useState({ 'fiebre': false, 'tos': false, 'dolorDeCabeza': false, 'dificultadRespiratoria': false, 'sensibilidadALaLuz': false, 'nauseas': false, 'sedExcesiva': false, 'hambreExcesiva': false, 'orinasFrecuentemente': false, 'dolorEnElPecho': false, 'sibilancias': false, 'dolorEnLasArticulaciones': false, 'rigidezEnLasArticulaciones': false, 'inflamacionEnLasArticulaciones': false, 'perdidaDeMemoria': false, 'confusion': false, 'dificultadAlHablar': false, 'bultosEnLosSenos': false, 'cambioEnElTamañoDeLosSenos': false, 'dolorEnLosSenos': false, 'tosPersistente': false, 'perdidaDePeso': false, 'fatiga': false, 'moretonesSinRazonAparente': false, 'tembloresEnLasManos': false, 'rigidezMuscular': false, 'problemasDeEquilibrio': false, 'mareos': false, 'faltaDeAliento': false, 'hinchazonEnLosTobillos': false, 'dolorAbdominal': false, 'diarrea': false, 'convulsiones': false, 'perdidaDeConsciencia': false, 'dolorEnLosHuesos': false, 'fracturasFaciles': false, 'perdidaDeEstatura': false, 'pielRoja': false, 'escamasEnLaPiel': false, 'picazonEnLaPiel': false })
 
   const handleClickYes = () => {
@@ -58,8 +57,14 @@ const App = () => {
 
       if (!valoresRepetidos.includes(numeroRandom)) {
         setSelected(numeroRandom)
-        setValoresRepetidos([...valoresRepetidos, numeroRandom])
-        setValores({ ...valores, [sintomas[selected]]: true })
+        setResultado(numeroRandom)
+
+        setValoresRepetidos((prevValoresRepetidos) => [...prevValoresRepetidos, resultado])
+
+        const selectedKey = Object.keys(valores)[resultado];
+        setValores((prevValores) => {
+          return { ...prevValores, [selectedKey]: true }
+        })
         flag = true
       }
     }
@@ -73,7 +78,7 @@ const App = () => {
 
       if (!valoresRepetidos.includes(numeroRandom)) {
         setSelected(numeroRandom)
-        setValoresRepetidos([...valoresRepetidos, numeroRandom])
+        setValoresRepetidos((prevValoresRepetidos) => [...prevValoresRepetidos, numeroRandom])
         flag = true
       }
     }
@@ -86,6 +91,7 @@ const App = () => {
       <br />
       <button onClick={handleClickYes}>Sí</button>
       <button onClick={handleClickNo}>No</button>
+      
     </div>
   )
 }
